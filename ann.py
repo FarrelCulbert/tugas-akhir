@@ -1,57 +1,47 @@
-from sklearn.neural_network import MLPClassifier
-from sklearn.preprocessing import StandardScaler
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.utils import to_categorical
+import joblib  # Import joblib untuk menyimpan scaler
 
-# Example data used to train the model
+# Contoh data dummy (fire size, gas level, fire count, label)
 data = [
-    [0.2, 500, "Safe"],
-    [1.5, 1000, "Medium"],
-    [2.5, 2000, "Danger"],
-    [1.0, 800, "Medium"],
-    [2.8, 1800, "Danger"],
-    [0.3, 400, "Safe"],
-    [0.5, 450, "Safe"],
-    [1.7, 950, "Medium"],
-    [2.6, 1950, "Danger"],
-    [0.4, 600, "Safe"]
+    [0.2, 100, 1, 0],  # Safe
+    [1.5, 500, 1, 1],  # Medium
+    [2.5, 1000, 1, 2],  # Danger
+    [0.8, 200, 2, 1],  # Medium (karena lebih dari 1 api kecil)
+    [1.8, 600, 1, 1],  # Medium
+    [2.7, 1200, 1, 2],  # Danger
+    [0.3, 150, 3, 1],  # Medium (lebih dari 2 api kecil)
+    [1.6, 550, 1, 1],  # Medium
+    [2.8, 1300, 1, 2],  # Danger
+    [0.6, 250, 4, 2],  # Danger (banyak api kecil)
 ]
 
-# Prepare the dataset (input features and labels)
-X = [[row[0], row[1]] for row in data]  # fire size, gas level
-y = [row[2] for row in data]  # hazard levels
+# Pisahkan fitur (X) dan label (y)
+X = np.array([[row[0], row[1], row[2]] for row in data])  # fire size, gas level, fire count
+y = np.array([row[3] for row in data])  # 0: Safe, 1: Medium, 2: Danger
 
-# Scale the data (normalize input values)
+# Normalisasi fitur
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Build and train the ANN model
-mlp = MLPClassifier(hidden_layer_sizes=(10, 10), max_iter=1000)
-mlp.fit(X_scaled, y)
+# Ubah label menjadi one-hot encoding
+y_categorical = to_categorical(y, num_classes=3)
 
-# Function to predict hazard level
-def predict_hazard(fire_size, gas_level):
-    # Normalize the input using the same scaler as before
-    input_data = scaler.transform([[fire_size, gas_level]])
-    
-    # Predict hazard level
-    prediction = mlp.predict(input_data)
-    
-    # Return the predicted hazard level
-    return prediction[0]
+# Bangun model ANN
+model = Sequential()
+model.add(Dense(10, input_dim=3, activation='relu'))  # 3 input neurons: fire size, gas level, fire count
+model.add(Dense(10, activation='relu'))  # Hidden layer 1
+model.add(Dense(3, activation='softmax'))  # Output layer: 3 classes (Safe, Medium, Danger)
 
-# Main loop to accept user input and predict hazard level
-while True:
-    # Get user input for fire size and gas level
-    fire_size = float(input("Enter fire size (e.g., 0.5 for small, 2.5 for large): "))
-    gas_level = float(input("Enter gas level (e.g., 500 for low gas, 2000 for high gas): "))
+# Kompilasi model
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    # Predict hazard level
-    hazard_level = predict_hazard(fire_size, gas_level)
+# Latih model dengan data dummy
+model.fit(X_scaled, y_categorical, epochs=500, batch_size=2)
 
-    # Output the hazard level
-    print(f"Predicted Hazard Level: {hazard_level}")
-
-    # Option to exit the loop
-    cont = input("Do you want to enter another value? (yes/no): ")
-    if cont.lower() != 'yes':
-        break
+# Simpan model dan scaler untuk digunakan di program utama
+model.save('fire_hazard_ann_model_v2.h5')
+joblib.dump(scaler, 'scaler_v2.pkl')
