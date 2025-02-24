@@ -13,3 +13,9 @@
 ## Installation
 Instructions on how to setup the project.
 
+### Install Python Dependencies
+'''sh
+pip install numpy opencv-python ultralytics tensorflow joblib pyserial pandas openpyxl
+pip install pyrealsense2
+'''
+
