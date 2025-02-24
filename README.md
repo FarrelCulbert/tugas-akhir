@@ -19,5 +19,8 @@ pip install numpy opencv-python ultralytics tensorflow joblib pyserial pandas op
 pip install pyrealsense2
 ```
 
-
+## Preparing Model Files
+Make sure all required model files are in the same directory as the program:
+- YOLO Model:
+  you can use YOLO Model from [Ultralytics](https://www.ultralytics.com/)
 
