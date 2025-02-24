@@ -27,10 +27,28 @@ Make sure all required model files are in the same directory as the program:
 
 - ANN Model: <br/>
 Train ANN Model from reference data and you will get file.h5 and file.pkl <br/>
-[ANN Model Program](https://github.com/FarrelCulbert/tugas-akhir/blob/main/Main/ann.py)
+[ANN Model Program](https://github.com/FarrelCulbert/tugas-akhir/blob/main/Main/ann.py) <br/>
+or use my ANN model at [here](https://github.com/FarrelCulbert/tugas-akhir/tree/main/Main)
 
-## Running Program
-After you have all model files, you can run the program<br/>
+## Program
+### Arduino 
+Upload MQ Sensor program to your Arduino. 
+```sh
+#define MQ_SENSOR A0  // Sensor gas MQ dihubungkan ke pin A0
+
+void setup() {
+    Serial.begin(9600);  // Mulai komunikasi serial
+}
+
+void loop() {
+    int gas_value = analogRead(MQ_SENSOR);  // Baca nilai sensor gas
+    Serial.println(gas_value);  // Kirim nilai ke Serial Monitor
+    delay(1000);  // Tunggu 1 detik sebelum membaca lagi
+}
+
+```
+
+### Final Program
+After you have all model files and Arduino with MQ Sensor program , you can run the program<br/>
 [Program](https://github.com/FarrelCulbert/tugas-akhir/blob/main/Main/fix.py)<br/>
-
 if your camera and arduino access errors, ensure the correct port is used
