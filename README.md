@@ -34,16 +34,16 @@ or use my ANN model at [here](https://github.com/FarrelCulbert/tugas-akhir/tree/
 ### Arduino 
 Upload MQ Sensor program to your Arduino. 
 ```sh
-#define MQ_SENSOR A0  // Sensor gas MQ dihubungkan ke pin A0
+#define MQ_SENSOR A0  
 
 void setup() {
-    Serial.begin(9600);  // Mulai komunikasi serial
+    Serial.begin(9600);  
 }
 
 void loop() {
-    int gas_value = analogRead(MQ_SENSOR);  // Baca nilai sensor gas
-    Serial.println(gas_value);  // Kirim nilai ke Serial Monitor
-    delay(1000);  // Tunggu 1 detik sebelum membaca lagi
+    int gas_value = analogRead(MQ_SENSOR);  // make sure name of sensor value matches with name in final program.
+    Serial.println(gas_value); 
+    delay(1000); 
 }
 
 ```
