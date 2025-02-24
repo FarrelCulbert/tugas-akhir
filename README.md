@@ -3,7 +3,7 @@
 "This repository contains my final project"
 
 ##Table of Contents
-- [Installation]
+- [Installation](#Installation)
 
 ## Requirement
 - Intel RealSense D435
