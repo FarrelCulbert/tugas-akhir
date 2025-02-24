@@ -21,6 +21,6 @@ pip install pyrealsense2
 
 ## Preparing Model Files
 Make sure all required model files are in the same directory as the program:
-- YOLO Model:
+- YOLO Model: <br/>
   you can use YOLO Model from [Ultralytics](https://www.ultralytics.com/)
 
