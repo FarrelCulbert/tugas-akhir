@@ -22,5 +22,6 @@ pip install pyrealsense2
 ## Preparing Model Files
 Make sure all required model files are in the same directory as the program:
 - YOLO Model: <br/>
-  you can use YOLO Model from [Ultralytics](https://www.ultralytics.com/) or you can train your fire model. this is my fire model you can use it [best.pt](https://github.com/FarrelCulbert/tugas-akhir/blob/main/Main/best.pt)
+  You can use YOLO Model from [Ultralytics](https://www.ultralytics.com/) or you can train your fire model. <br/>
+  This is my fire model you can use it [best.pt](https://github.com/FarrelCulbert/tugas-akhir/blob/main/Main/best.pt)
 
